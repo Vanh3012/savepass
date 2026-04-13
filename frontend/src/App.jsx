@@ -7,8 +7,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/auth" replace />} />
-        <Route path="/auth" element={<Auth />} />
+        <Route path="/" element={<Navigate to="/auth/login" replace />} />
+        <Route path="/auth" element={<Navigate to="/auth/login" replace />} />
+        <Route path="/auth/login" element={<Auth mode="login" />} />
+        <Route path="/auth/register" element={<Auth mode="register" />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>

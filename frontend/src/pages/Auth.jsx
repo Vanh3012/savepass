@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
 import { KeyRound, Lock, User, LogIn, UserPlus } from 'lucide-react';
 
-export default function Auth() {
-  const [isLogin, setIsLogin] = useState(true);
+export default function Auth({ mode = 'login' }) {
+  const [isLogin, setIsLogin] = useState(mode !== 'register');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsLogin(mode !== 'register');
+    setError('');
+  }, [mode]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -86,8 +91,8 @@ export default function Auth() {
             type="button"
             className="text-primary hover:text-blue-400 text-sm transition-colors"
             onClick={() => {
-              setIsLogin(!isLogin);
               setError('');
+              navigate(isLogin ? '/auth/register' : '/auth/login');
             }}
           >
             {isLogin ? 'Bạn chưa có tài khoản? Đăng ký ngay' : 'Đã có tài khoản? Quay lại đăng nhập'}
