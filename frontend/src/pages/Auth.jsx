@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../api';
+import api, { getApiErrorMessage } from '../api';
 import { KeyRound, Lock, User, LogIn, UserPlus } from 'lucide-react';
 
 export default function Auth({ mode = 'login' }) {
@@ -26,7 +26,7 @@ export default function Auth({ mode = 'login' }) {
       // On success, go to dashboard
       navigate('/dashboard');
     } catch (err) {
-      setError(err.response?.data?.message || 'Đã có lỗi xảy ra. Vui lòng thử lại.');
+      setError(getApiErrorMessage(err));
     }
   };
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../api';
+import api, { getApiErrorMessage } from '../api';
 import { LogOut, Plus, Edit2, Trash2, KeyRound, Globe, User, Shield, Lock, Eye, EyeOff } from 'lucide-react';
 
 export default function Dashboard() {
@@ -62,7 +62,7 @@ export default function Dashboard() {
       setShowModal(false);
       fetchPasswords();
     } catch (err) {
-      setError(err.response?.data?.message || err.response?.data?.error || 'Đã có lỗi xảy ra');
+      setError(getApiErrorMessage(err, 'Đã có lỗi xảy ra'));
     }
   };
 
@@ -72,7 +72,7 @@ export default function Dashboard() {
         await api.post('/passwords/delete', { id });
         fetchPasswords();
     } catch (err) {
-        alert(err.response?.data?.message || 'Lỗi khi xoá');
+        alert(getApiErrorMessage(err, 'Lỗi khi xoá'));
     }
   };
 
